@@ -3,7 +3,10 @@
 #include "Test.h"
 #include "Teacher.h"
 #include "School.h"
+#include "Viewer.h"
 #include <iterator>
+
+
 
 int main()
 {
@@ -11,7 +14,10 @@ int main()
 	SetConsoleOutputCP(1251);
 	setlocale(LC_ALL, "Rus");
 
-	Question q;
+	Viewer v;
+	v.LogIn();
+
+	/*Question q;
 	q.setQuesText("Как разговаривает собака?");
 	q.addAnswerChoice("1. гав-гав");
 	q.addAnswerChoice("2. мяу");
