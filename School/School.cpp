@@ -59,6 +59,15 @@ const Student & School::getStudent(int idStudent) const
 			return students[i];
 	}
 }
+//++
+const Student & School::getStudent(string surname) const
+{
+	for (size_t i = 0; i < students.size(); i++)
+	{
+		if (students[i].getSurname() == surname)
+			return students[i];
+	}
+}
 
 const Teacher & School::getTeacher(int idTeacher) const
 {
@@ -70,6 +79,15 @@ const Teacher & School::getTeacher(int idTeacher) const
 	for (size_t i = 0; i < teachers.size(); i++)
 	{
 		if (teachers[i].getIdTeacher() == idTeacher)
+			return teachers[i];
+	}
+}
+//++
+const Teacher & School::getTeacher(string surname) const
+{
+	for (size_t i = 0; i < teachers.size(); i++)
+	{
+		if (teachers[i].getSurname() == surname)
 			return teachers[i];
 	}
 }

@@ -22,7 +22,9 @@ public:
 	const vector<Student>& getStudentsList()const { return students; }
 	const vector<Teacher>& getTeachersList()const { return teachers; }
 	const Student& getStudent(int idStudent)const;
+	const Student& getStudent(string surname)const;//++
 	const Teacher& getTeacher(int idTeacher) const;
+	const Teacher& getTeacher(string surname) const;//++
 	int getCntStudents()const { return students.size(); }
 	int getCntTeachers()const { return teachers.size(); }
 	void writeStudentsToFile(string fileName);

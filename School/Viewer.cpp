@@ -59,6 +59,36 @@ void Viewer::LogIn()
 			k = 1;
 		}
 	} while (k == 0);
+	if (m == 1)
+	{
+		clearScreen();
+		GotoXY(15, 5);
+		green();
+		cout << "Добро пожаловать в ITStep!";
+		GotoXY(15, 8);
+		white();
+		string l, p;
+		cout << "Фамилия: ";
+		GotoXY(24, 8);
+		cin >> l;
+		GotoXY(15, 9);
+		cout << "Пароль: ";
+		GotoXY(24, 9);
+		do
+		{
+			//k = 0;
+			code = _getch();
+			cout << "*";
+			p += code;
+			if (code == 13)
+				{
+					k = 0;
+				}
+		} while (k == 1);
+		sch.readStudentsFromFile("1.txt");
+		Student tmp=sch.getStudent(l);
+		tmp.info();
+	}
 }
 
 void Viewer::yellow()
