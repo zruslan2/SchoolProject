@@ -15,12 +15,13 @@ class Human abstract
 	date_ birthDay;
 	string password;
 public:
-	Human(string firstName, string surname, bool sex, date_ birthDay);
+	Human(string firstName, string surname, bool sex, date_ birthDay, string password);//++
 	Human() = default;
 	void setFirstName(string firstName);
 	void setSurname(string surname);
 	void setSex(bool sex);
 	void setBirthDay(date_ birthDay);
+	void setBirthDay(int d, int m, int y);
 	void setPassword(string password);
 
 	string getFirstName()const { return firstName; }

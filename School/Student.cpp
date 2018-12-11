@@ -1,9 +1,7 @@
 #include "Student.h"
 
-
-
-Student::Student(string firstName, string surname, bool sex, date_ birthDay)
-	:Human(firstName, surname, sex, birthDay)
+Student::Student(string firstName, string surname, bool sex, date_ birthDay, string password)
+	:Human(firstName, surname, sex, birthDay, password)
 {
 	this->status = "студент";
 }
@@ -29,7 +27,7 @@ string Student::convertToString()
 {
 	string res = to_string(idStudent) + ';';
 	res += Human::convertToString();
-	res += status + ';';
+	res += status + ';';	
 	return res;
 }
 

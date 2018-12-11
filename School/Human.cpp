@@ -2,12 +2,13 @@
 
 
 
-Human::Human(string firstName, string surname, bool sex, date_ birthDay)
+Human::Human(string firstName, string surname, bool sex, date_ birthDay, string password)//++
 {
 	this->firstName = firstName;
 	this->surname = surname;
 	this->sex = sex;
 	this->birthDay = birthDay;
+	this->password = password;//++
 }
 
 void Human::setFirstName(string firstName)
@@ -28,6 +29,13 @@ void Human::setSex(bool sex)
 void Human::setBirthDay(date_ birthDay)
 {
 	this->birthDay = birthDay;
+}
+
+void Human::setBirthDay(int d, int m, int y)
+{
+	this->birthDay.setDay(d);
+	this->birthDay.setMonth(m);
+	this->birthDay.setYear(y);
 }
 
 void Human::setPassword(string password)
