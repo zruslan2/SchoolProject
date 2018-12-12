@@ -19,6 +19,6 @@ public:
 	COORD getPos();//++
 	void clearScreen()const { system("cls"); }
 	string pasEntry();//++
-	int intEntry(int c, bool e);
+	int intEntry(int c, bool e);//++
 };
 
