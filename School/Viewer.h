@@ -15,9 +15,10 @@ public:
 	void white();
 	void red();
 	void green();
-	void GotoXY(int X, int Y);
-	COORD getpos();//++
+	void gotoXY(int X, int Y);
+	COORD getPos();//++
 	void clearScreen()const { system("cls"); }
 	string pasEntry();//++
+	int intEntry(int c, bool e);
 };
 
