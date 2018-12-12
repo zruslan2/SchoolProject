@@ -10,10 +10,6 @@ void School::setSchoolName(string schoolName)
 	this->schoolName = schoolName;
 }
 
-void School::setPassword(string password)
-{
-	this->password = password;
-}
 
 void School::addStudent(Student & st)
 {
@@ -51,6 +47,16 @@ void School::delTeacher(int idTeacher)
 		return;
 }
 
+void School::addTester(Tester & t) //++
+{
+	testers.push_back(t);
+}
+
+void School::addListTests(ListTests & lt) //++
+{
+	listTests.push_back(lt);
+}
+
 const Student & School::getStudent(int idStudent) const
 {
 	for (size_t i = 0; i < students.size(); i++)
@@ -59,7 +65,7 @@ const Student & School::getStudent(int idStudent) const
 			return students[i];
 	}
 }
-//++
+
 const Student & School::getStudent(string surname) const
 {
 	for (size_t i = 0; i < students.size(); i++)
@@ -71,18 +77,13 @@ const Student & School::getStudent(string surname) const
 
 const Teacher & School::getTeacher(int idTeacher) const
 {
-	/*auto it = find_if(begin(teachers), end(teachers), [&idTeacher](const Teacher& t) {
-	return (t.getIdTeacher() == idTeacher);
-	});
-	return (begin(teachers)+it);*/
-
 	for (size_t i = 0; i < teachers.size(); i++)
 	{
 		if (teachers[i].getIdTeacher() == idTeacher)
 			return teachers[i];
 	}
 }
-//++
+
 const Teacher & School::getTeacher(string surname) const
 {
 	for (size_t i = 0; i < teachers.size(); i++)
@@ -92,9 +93,9 @@ const Teacher & School::getTeacher(string surname) const
 	}
 }
 
-void School::writeStudentsToFile(string fileName)
+void School::writeStudentsToFile() //++
 {
-	ofstream os(fileName);
+	ofstream os("students");
 	string s;
 	for (auto i = begin(students); i != end(students); i++)
 	{
@@ -106,9 +107,9 @@ void School::writeStudentsToFile(string fileName)
 	os.close();
 }
 
-void School::writeTeachersToFile(string fileName)
+void School::writeTeachersToFile() //++
 {
-	ofstream os(fileName);
+	ofstream os("teachers");
 	string s;
 	for (auto i = begin(teachers); i != end(teachers); i++)
 	{
@@ -120,9 +121,37 @@ void School::writeTeachersToFile(string fileName)
 	os.close();
 }
 
-void School::readStudentsFromFile(string fileName)
+void School::writeTestersToFile() //++
 {
-	ifstream is(fileName);
+	ofstream os("testers");
+	string s;
+	for (auto i = begin(testers); i != end(testers); i++)
+	{
+		s = i->convertToString();
+		os << s;
+		if (i != end(testers) - 1)
+			os << endl;
+	}
+	os.close();
+}
+
+void School::writeListTestsToFile() //++
+{
+	ofstream os("listTest");
+	string s;
+	for (auto i = begin(listTests); i != end(listTests); i++)
+	{
+		s = i->convertToString();
+		os << s;
+		if (i != end(listTests) - 1)
+			os << endl;
+	}
+	os.close();
+}
+
+void School::readStudentsFromFile() //++
+{
+	ifstream is("students");
 	string s;
 	while (!is.eof()) {
 		getline(is, s);
@@ -133,15 +162,41 @@ void School::readStudentsFromFile(string fileName)
 	is.close();
 }
 
-void School::readTeachersFromFile(string fileName)
+void School::readTeachersFromFile() //++
 {
-	ifstream is(fileName);
+	ifstream is("teachers");
 	string s;
 	while (!is.eof()) {
 		getline(is, s);
 		Teacher t;
 		t.readFromString(s);
 		addTeacher(t);
+	}
+	is.close();
+}
+
+void School::readTestersFromFile() //++
+{
+	ifstream is("testers");
+	string s;
+	while (!is.eof()) {
+		getline(is, s);
+		Tester t;
+		t.readFromString(s);
+		addTester(t);
+	}
+	is.close();
+}
+
+void School::readListTestsFromFile() //++
+{
+	ifstream is("listTest");
+	string s;
+	while (!is.eof()) {
+		getline(is, s);
+		ListTests lt;
+		lt.readFromString(s);
+		addListTests(lt);
 	}
 	is.close();
 }

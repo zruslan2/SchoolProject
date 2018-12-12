@@ -71,18 +71,8 @@ void Viewer::LogIn()
 		GotoXY(15, 9);
 		cout << "Пароль: ";
 		GotoXY(24, 9);
-		do
-		{
-			//k = 0;
-			code = _getch();
-			cout << "*";
-			p += code;
-			if (code == 13)
-				{
-					k = 0;
-				}
-		} while (k == 1);
-		sch.readStudentsFromFile("1.txt");
+		p = pasEntry();
+		sch.readStudentsFromFile();
 		Student tmp=sch.getStudent(l);
 		//tmp.info();
 	}
@@ -202,25 +192,97 @@ void Viewer::LogIn()
 		GotoXY(15, 13); white();
 		cout << "Дата рождения:";
 		GotoXY(15, 14); white();
-		cout << "Год: "; cin >> y;
+		cout << "Год: "; 
+		string sy;
+		for (int i = 0; i < 4; i++)
+		{
+			code = _getch();
+			if (code < 48 || code>57)
+			{
+				code = _getch();
+				i--;
+			}
+			else
+			{
+				sy += code;
+				cout << (char)code;
+			}
+		}
+		y = stoi(sy);		
 		GotoXY(15, 15); white();
-		cout << "Месяц (цифрами): "; cin >> m;
+		cout << "Месяц (цифрами): "; 
+		sy.clear();
+		for (int i = 0; i < 2; i++)
+		{
+			code = _getch();
+			if(code==13)
+			{
+				break;
+			}
+			else if (code < 48 || code>57)
+			{
+				code = _getch();
+				i--;
+			}
+			else
+			{
+				sy += code;
+				cout << (char)code;
+			}
+		}
+		m = stoi(sy);
+		if (m > 12)m = 12;
 		GotoXY(15, 16); white();
-		cout << "День: "; cin >> d;
-		GotoXY(15, 17); white();
-		cout << "Введите пароль: "; cin >> pas;
-		GotoXY(15, 18); white();
-		cout << "Повторите: "; cin >> pas1;
-		if (pas1 == pas)
+		cout << "День: "; 
+		sy.clear();
+		for (int i = 0; i < 2; i++)
 		{
-			GotoXY(15, 19); green();
-			cout << "Пароль принят!";
+			code = _getch();
+			if (code == 13)
+			{
+				break;
+			}
+			else if (code < 48 || code>57)
+			{
+				code = _getch();
+				i--;
+			}
+			else
+			{
+				sy += code;
+				cout << (char)code;
+			}
 		}
-		else
+		d = stoi(sy);
+		do
 		{
-			GotoXY(15, 19); red();
-			cout << "Вы не верно ввели пароль";
-		}
+			k = 0;
+			GotoXY(15, 17); white();
+			cout << "                                                                ";
+			GotoXY(15, 18); white();
+			cout << "                                                                ";
+			GotoXY(15, 19); white();
+			cout << "                                                                ";
+			GotoXY(15, 17); white();
+			cout << "Введите пароль: "; 
+			pas=pasEntry();
+			GotoXY(15, 18); white();
+			cout << "Повторите: "; 
+			pas1= pasEntry();
+			if (pas1 == pas)
+			{
+				GotoXY(15, 19); green();
+				cout << "Пароль принят!";
+				k = 1;
+			}
+			else
+			{
+				GotoXY(15, 19); red();
+				cout << "Вы не верно ввели пароль";
+				Sleep(1000);
+			}
+		} while (k == 0);
+		
 		if (st == 1)
 		{
 			N = new Teacher();
@@ -256,5 +318,71 @@ void Viewer::GotoXY(int X, int Y)
 {
 	COORD coord = { X, Y };
 	SetConsoleCursorPosition(hConsole, coord);
+}
+
+COORD Viewer::getpos()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	COORD coord;
+
+	if (GetConsoleScreenBufferInfo(
+		GetStdHandle(STD_OUTPUT_HANDLE), &csbi))
+	{
+		coord.X = csbi.dwCursorPosition.X;
+		coord.Y = csbi.dwCursorPosition.Y;
+		return coord;
+	}
+	else
+	{
+		coord.X = 0;
+		coord.Y = 0;
+		return coord;
+	}
+}
+
+string Viewer::pasEntry()
+{
+	string str;
+	bool fl=false;
+	int code, k;
+	do
+	{
+		k = 1;
+		code = _getch();		
+		if (code == 9)
+		{
+			if (fl == false)
+				fl = true;
+			else
+			{
+				fl = false;
+			}
+		}	
+		COORD c;
+		if (code != 13&& code!=9)
+		{
+			if (fl == false)
+			{
+				c = getpos();
+				GotoXY(c.X - str.size(), c.Y);
+				for(int i=0;i<str.size();i++)
+					cout << "*";
+				cout << "*";
+			}				
+			else
+			{
+				c = getpos();
+				GotoXY(c.X - str.size(), c.Y);
+				cout << str;
+				cout << (char)code;
+			}
+			str += code;
+		}			
+		if (code == 13)
+		{
+			k = 0;
+		}
+	} while (k == 1);
+	return str;
 }
 

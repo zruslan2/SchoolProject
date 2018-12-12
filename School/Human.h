@@ -21,7 +21,7 @@ public:
 	void setSurname(string surname);
 	void setSex(bool sex);
 	void setBirthDay(date_ birthDay);
-	void setBirthDay(int d, int m, int y);
+	void setBirthDay(int d, int m, int y);//++
 	void setPassword(string password);
 
 	string getFirstName()const { return firstName; }

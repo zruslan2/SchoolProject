@@ -16,6 +16,8 @@ public:
 	void red();
 	void green();
 	void GotoXY(int X, int Y);
+	COORD getpos();//++
 	void clearScreen()const { system("cls"); }
+	string pasEntry();//++
 };
 
