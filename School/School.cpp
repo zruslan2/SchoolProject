@@ -64,6 +64,8 @@ const Student & School::getStudent(int idStudent) const
 		if (students[i].getIdStudent() == idStudent)
 			return students[i];
 	}
+	Student st;
+	return st;
 }
 
 const Student & School::getStudent(string surname) const
@@ -73,6 +75,8 @@ const Student & School::getStudent(string surname) const
 		if (students[i].getSurname() == surname)
 			return students[i];
 	}
+	Student st;
+	return st;
 }
 
 const Teacher & School::getTeacher(int idTeacher) const
@@ -82,6 +86,8 @@ const Teacher & School::getTeacher(int idTeacher) const
 		if (teachers[i].getIdTeacher() == idTeacher)
 			return teachers[i];
 	}
+	Teacher t;
+	return t;
 }
 
 const Teacher & School::getTeacher(string surname) const
@@ -91,6 +97,8 @@ const Teacher & School::getTeacher(string surname) const
 		if (teachers[i].getSurname() == surname)
 			return teachers[i];
 	}
+	Teacher t;
+	return t;
 }
 
 void School::writeStudentsToFile() //++

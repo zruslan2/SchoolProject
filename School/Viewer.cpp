@@ -2,6 +2,7 @@
 
 Viewer::Viewer():sch("ITStep")
 {
+
 }
 
 void Viewer::LogIn()
@@ -11,53 +12,9 @@ void Viewer::LogIn()
 	green();
 	cout << "Добро пожаловать в ITStep!";
 	gotoXY(15, 8);
-	yellow();
-	cout << "-> Войти";
-	white();
-	gotoXY(15, 9);
-	cout << "   Зарегистрироватся";
+	vector<string> st1 = { "Войти", "Зарегистрироватся" };
 	int r, m = 1, k, code;
-	do
-	{
-		k = 0;
-		code = _getch();
-		if (code == 224 || code == 0)
-			code = _getch();
-		if (code == 80)
-		{
-			if (m != 2) m += 1;
-			else m = 1;
-			if (m == 1)
-			{
-				yellow(); gotoXY(15, 8); printf("-> Войти");
-				white(); gotoXY(15, 9);  printf("   Зарегистрироватся");
-			}
-			else if (m == 2)
-			{
-				white(); gotoXY(15, 8); printf("   Войти");
-				yellow(); gotoXY(15, 9);  printf("-> Зарегистрироватся");
-			}
-		}
-		else if (code == 72)
-		{
-			if (m != 1) m -= 1;
-			else m = 2;
-			if (m == 1)
-			{
-				yellow(); gotoXY(15, 8); printf("-> Войти");
-				white(); gotoXY(15, 9);  printf("   Зарегистрироватся");
-			}
-			else if (m == 2)
-			{
-				white(); gotoXY(15, 8); printf("   Войти");
-				yellow(); gotoXY(15, 9);  printf("-> Зарегистрироватся");
-			}
-		}
-		else if (code == 13)
-		{
-			k = 1;
-		}
-	} while (k == 0);
+	m = choice(st1, 15, 8);	
 	if (m == 1)
 	{
 		clearScreen();
@@ -65,23 +22,94 @@ void Viewer::LogIn()
 		cout << "Добро пожаловать в ITStep!";
 		vector<string> st = { "Преподователь", "Студент", "Администратор" };
 		int v = choice(st, 15, 8);
-		/*gotoXY(15, 8); white();
 		string l, p;
-		cout << "Фамилия: ";
-		gotoXY(24, 8);
-		cin >> l;
-		gotoXY(15, 9);
-		cout << "Пароль: ";
-		gotoXY(24, 9);
-		p = pasEntry();
-		sch.readStudentsFromFile();
-		sch.readTeachersFromFile();*/
-		//Student tmp=sch.getStudent(l);
-		//Teacher tmp1 = sch.getTeacher(l);
-		//gotoXY(15, 12);
-		//tmp.info();
-		//tmp1.info();
-		//tmp.info();
+		if (v == 3)
+		{
+			clearScreen();
+			gotoXY(15, 5); green();
+			cout << "Добро пожаловать в ITStep!";
+			gotoXY(15, 8); white();			
+			cout << "Фамилия: ";
+			gotoXY(24, 8);
+			cin >> l;
+			gotoXY(15, 9);
+			cout << "Пароль: ";
+			gotoXY(24, 9);
+			p = pasEntry();
+			if (l == "Администратор"&&p == "111")
+			{
+				menuA();
+			}
+			else
+			{
+				gotoXY(15, 10); red();
+				cout << "Фамилия или пароль не верны" << endl;
+				Sleep(2000);
+				LogIn();
+			}
+		}
+		else if (v == 1)
+		{
+			clearScreen();
+			gotoXY(15, 5); green();
+			cout << "Добро пожаловать в ITStep!";
+			gotoXY(15, 8); white();
+			cout << "Фамилия: ";
+			gotoXY(24, 8);
+			cin >> l;
+			gotoXY(15, 9);
+			cout << "Пароль: ";
+			gotoXY(24, 9);
+			p = pasEntry();
+			sch.readTeachersFromFile();
+			try
+			{
+				Teacher tmp1 = sch.getTeacher(l);
+				if (tmp1.getPassword() == p)
+				{
+					menuT();
+					//return tmp1.getIdTeacher();
+				}
+			}
+			catch (...)
+			{
+				gotoXY(15, 10); red();
+				cout << "Преподователь не найден" << endl;
+				Sleep(2000);
+				LogIn();
+			}
+		}
+		else if (v == 2)
+		{
+			clearScreen();
+			gotoXY(15, 5); green();
+			cout << "Добро пожаловать в ITStep!";
+			gotoXY(15, 8); white();
+			cout << "Фамилия: ";
+			gotoXY(24, 8);
+			cin >> l;
+			gotoXY(15, 9);
+			cout << "Пароль: ";
+			gotoXY(24, 9);
+			p = pasEntry();
+			sch.readStudentsFromFile();
+			try
+			{
+				Student tmp = sch.getStudent(l);
+				if (tmp.getPassword() == p)
+				{
+					menuS();
+					//return tmp.getIdStudent();
+				}
+			}
+			catch (...)
+			{
+				gotoXY(15, 10); red();
+				cout << "Cтудент не найден" << endl;
+				Sleep(2000);
+				LogIn();
+			}			
+		}		
 	}
 	else if (m == 2)
 	{
@@ -91,55 +119,12 @@ void Viewer::LogIn()
 		gotoXY(15, 8); white();
 		cout << "Вы регистриретесь как: ";
 		gotoXY(15, 9); yellow();
-		cout << "-> Преподователь";
-		gotoXY(15, 10); white();
-		cout << "   Студент";
-		int st=1;
-		do
-		{
-			k = 0;
-			code = _getch();
-			if (code == 224 || code == 0)
-				code = _getch();
-			if (code == 80)
-			{
-				if (st != 2) st += 1;
-				else st = 1;
-				if (st == 1)
-				{
-					yellow(); gotoXY(15, 9); cout << "-> Преподователь";
-					white(); gotoXY(15, 10);  cout << "   Студент";
-				}
-				else if (st == 2)
-				{
-					white(); gotoXY(15, 9); cout << "   Преподователь";
-					yellow(); gotoXY(15, 10);  cout << "-> Студент";
-				}
-			}
-			else if (code == 72)
-			{
-				if (st != 1) st -= 1;
-				else st = 2;
-				if (st == 1)
-				{
-					yellow(); gotoXY(15, 9); cout << "-> Преподователь";
-					white(); gotoXY(15, 10);  cout << "   Студент";
-				}
-				else if (st == 2)
-				{
-					white(); gotoXY(15, 9); cout << "   Преподователь";
-					yellow(); gotoXY(15, 10);  cout << "-> Студент";
-				}
-			}
-			else if (code == 13)
-			{				
-				k = 1;
-			}
-		} while (k == 0);
+		int st = 1;
+		vector<string> st2 = { "Преподователь", "Студент" };
+		st = choice(st2, 15, 9);		
 		clearScreen();
 		gotoXY(15, 5); green();
-		cout << "Добро пожаловать в ITStep!";		
-		Human *N = nullptr;
+		cout << "Добро пожаловать в ITStep!";			
 		string fn, sn, pas, pas1;
 		bool sex=1;
 		int d, m, y;
@@ -151,51 +136,9 @@ void Viewer::LogIn()
 		gotoXY(32, 9); cin >> fn;
 		gotoXY(15, 10); white();
 		cout << "Пол: ";
-		gotoXY(15, 11); yellow();
-		cout << "-> Мужской";
-		gotoXY(15, 12); white();
-		cout << "   Женский";
-		do
-		{
-			k = 0;
-			code = _getch();
-			if (code == 224 || code == 0)
-				code = _getch();
-			if (code == 80)
-			{
-				if (sex != 1) sex += 1;
-				else sex = 0;
-				if (sex == 1)
-				{
-					yellow(); gotoXY(15, 11); cout << "-> Мужской";
-					white(); gotoXY(15, 12);  cout << "   Женский";
-				}
-				else if (sex == 0)
-				{
-					white(); gotoXY(15, 11); cout << "   Мужской";
-					yellow(); gotoXY(15, 12);  cout << "-> Женский";
-				}
-			}
-			else if (code == 72)
-			{
-				if (sex != 0) sex -= 1;
-				else sex = 1;
-				if (sex == 1)
-				{
-					yellow(); gotoXY(15, 11); cout << "-> Мужской";
-					white(); gotoXY(15, 12);  cout << "   Женский";
-				}
-				else if (sex == 0)
-				{
-					white(); gotoXY(15, 11); cout << "   Мужской";
-					yellow(); gotoXY(15, 12);  cout << "-> Женский";
-				}
-			}
-			else if (code == 13)
-			{
-				k = 1;
-			}
-		} while (k == 0);
+		vector<string> st3 = { "Мужской", "Женский" };
+		int s = choice(st3, 15, 11);
+		sex = s - 1;
 		gotoXY(15, 13); white();
 		cout << "Дата рождения:";
 		gotoXY(15, 14); white();
@@ -472,4 +415,22 @@ int Viewer::choice(vector<string> ch, int x, int y)
 			return choice;
 		}
 	} while (k == 1);	
+}
+
+void Viewer::menuA()
+{
+	clearScreen();
+	cout << "Admin";
+}
+
+void Viewer::menuT()
+{
+	clearScreen();
+	cout << "Teacher";
+}
+
+void Viewer::menuS()
+{
+	clearScreen();
+	cout << "Student";
 }

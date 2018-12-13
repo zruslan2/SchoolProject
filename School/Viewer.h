@@ -21,5 +21,8 @@ public:
 	string pasEntry();//++
 	int intEntry(int c, bool e);//++
 	int choice(vector<string> ch, int x, int y);
+	void menuA();
+	void menuT();
+	void menuS();
 };
 
