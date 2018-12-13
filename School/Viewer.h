@@ -20,5 +20,6 @@ public:
 	void clearScreen()const { system("cls"); }
 	string pasEntry();//++
 	int intEntry(int c, bool e);//++
+	int choice(vector<string> ch, int x, int y);
 };
 

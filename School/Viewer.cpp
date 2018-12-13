@@ -63,7 +63,9 @@ void Viewer::LogIn()
 		clearScreen();
 		gotoXY(15, 5); green();
 		cout << "Добро пожаловать в ITStep!";
-		gotoXY(15, 8); white();
+		vector<string> st = { "Преподователь", "Студент", "Администратор" };
+		int v = choice(st, 15, 8);
+		/*gotoXY(15, 8); white();
 		string l, p;
 		cout << "Фамилия: ";
 		gotoXY(24, 8);
@@ -73,7 +75,7 @@ void Viewer::LogIn()
 		gotoXY(24, 9);
 		p = pasEntry();
 		sch.readStudentsFromFile();
-		sch.readTeachersFromFile();
+		sch.readTeachersFromFile();*/
 		//Student tmp=sch.getStudent(l);
 		//Teacher tmp1 = sch.getTeacher(l);
 		//gotoXY(15, 12);
@@ -395,4 +397,79 @@ int Viewer::intEntry(int c, bool e)
 	}
 	rs = stoi(is);
 	return rs;
+}
+
+int Viewer::choice(vector<string> ch, int x, int y)
+{
+	int choice=1, x1=x, y1=y, k, code;
+	x1 = x; y1 = y;
+	for (int i = 1; i <= ch.size(); i++)
+	{
+		gotoXY(x1, y1);
+		if (i == choice)
+		{
+			yellow();
+			cout << "-> " + ch[i - 1];
+		}
+		else
+		{
+			white();
+			cout << "   " + ch[i - 1];
+		}
+		y1++;
+	}
+	do
+	{
+		k = 1;
+		code = _getch();
+		if (code == 224 || code == 0)
+			code = _getch();
+		if (code == 80)
+		{
+			if (choice != ch.size()) choice += 1;
+			else choice = 1;
+			x1 = x; y1 = y;
+			for (int i = 1; i <= ch.size(); i++)
+			{
+				gotoXY(x1, y1);
+				if (i == choice)
+				{
+					yellow();
+					cout << "-> " + ch[i - 1];
+				}
+				else
+				{
+					white();
+					cout << "   " + ch[i - 1];
+				}
+				y1++;
+			}
+		}
+		else if (code == 72)
+		{
+			if (choice != 1) choice -= 1;
+			else choice = ch.size();
+			x1 = x; y1 = y;
+			for (int i = 1; i <= ch.size(); i++)
+			{
+				gotoXY(x1, y1);
+				if (i == choice)
+				{
+					yellow();
+					cout << "-> " + ch[i - 1];
+				}
+				else
+				{
+					white();
+					cout << "   " + ch[i - 1];
+				}
+				y1++;
+			}
+		}
+		else if (code == 13)
+		{
+			k = 1;
+			return choice;
+		}
+	} while (k == 1);	
 }
