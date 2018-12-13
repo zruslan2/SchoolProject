@@ -73,7 +73,12 @@ void Viewer::LogIn()
 		gotoXY(24, 9);
 		p = pasEntry();
 		sch.readStudentsFromFile();
-		Student tmp=sch.getStudent(l);
+		sch.readTeachersFromFile();
+		//Student tmp=sch.getStudent(l);
+		//Teacher tmp1 = sch.getTeacher(l);
+		//gotoXY(15, 12);
+		//tmp.info();
+		//tmp1.info();
 		//tmp.info();
 	}
 	else if (m == 2)
@@ -239,11 +244,29 @@ void Viewer::LogIn()
 		
 		if (st == 1)
 		{
-			N = new Teacher();
+			Teacher t;
+			t.setFirstName(fn);
+			t.setSurname(sn);
+			t.setBirthDay(d, m, y);
+			t.setSex(sex);
+			t.setPassword(pas);
+			t.setStatus(sch.getTeacherStatus().operator[](0));
+			sch.readTeachersFromFile();
+			sch.addTeacher(t);				
+			sch.writeTeachersToFile();
 		}
 		else if (st == 2)
 		{
-			N = new Student();
+			Student s;
+			s.setFirstName(fn);
+			s.setSurname(sn);
+			s.setBirthDay(d, m, y);
+			s.setSex(sex);
+			s.setPassword(pas);
+			s.setStatus(sch.getStudentStatus().operator[](0));
+			sch.readStudentsFromFile();
+			sch.addStudent(s);				
+			sch.writeStudentsToFile();			
 		}
 	}
 }
