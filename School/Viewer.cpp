@@ -13,7 +13,7 @@ void Viewer::LogIn()
 	cout << "Добро пожаловать в ITStep!";
 	gotoXY(15, 8);
 	vector<string> st1 = { "Войти", "Зарегистрироватся" };
-	int r, m = 1, k, code;
+	int m = 1, k;
 	m = choice(st1, 15, 8);	
 	if (m == 1)
 	{
@@ -67,7 +67,7 @@ void Viewer::LogIn()
 				Teacher tmp1 = sch.getTeacher(l);
 				if (tmp1.getPassword() == p)
 				{
-					menuT();
+					menuT(tmp1.getIdTeacher());
 					//return tmp1.getIdTeacher();
 				}
 			}
@@ -98,7 +98,7 @@ void Viewer::LogIn()
 				Student tmp = sch.getStudent(l);
 				if (tmp.getPassword() == p)
 				{
-					menuS();
+					menuS(tmp.getIdStudent());
 					//return tmp.getIdStudent();
 				}
 			}
@@ -423,14 +423,55 @@ void Viewer::menuA()
 	cout << "Admin";
 }
 
-void Viewer::menuT()
+void Viewer::menuT(int id)
 {
 	clearScreen();
-	cout << "Teacher";
+	gotoXY(15, 5);
+	green();
+	cout << "Добро пожаловать в ITStep!";
+	gotoXY(15, 8);
+	vector<string> st1 = { "Добавить тест", "Список тестов", "Список студентов", "Выйти" };
+	int m = 1;
+	m = choice(st1, 15, 8);
+	if (m == 4)
+	{
+		LogIn();
+	}
+	else if (m == 1)
+	{
+
+	}
+	else if (m == 2)
+	{
+
+	}
+	else if (m == 3)
+	{
+
+	}
 }
 
-void Viewer::menuS()
+void Viewer::menuS(int id)
 {
 	clearScreen();
-	cout << "Student";
+	gotoXY(15, 5);
+	green();
+	cout << "Добро пожаловать в ITStep!";
+	gotoXY(15, 8);
+	vector<string> st1 = { "Пройти тест", "Пройденные тесты", "Выйти" };
+	int m = 1;
+	m = choice(st1, 15, 8);
+	if (m == 3)
+	{
+		LogIn();
+	}
+	else if (m == 1)
+	{
+
+	}
+	else if (m == 2)
+	{
+
+	}
+
 }
