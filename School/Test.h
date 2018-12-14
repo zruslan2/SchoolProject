@@ -14,6 +14,7 @@ class Test
 	int idCreator;
 public:
 	Test(string testName);
+	Test()=default;
 	void setIdTest(int idTest);
 	int getIdTest()const { return this->idTest; }
 	void setTestName(string testName);
@@ -31,8 +32,9 @@ public:
 	auto getBeginTestQuestions()const { return begin(testQuestions); }
 	auto getEndTestQuestions()const { return end(testQuestions); }
 	string convertToString();
-	void readFromFile(string fileName);
-	void writeToFile(string fileName);
+	void readFromFile(int id);
+	void writeToFile(); //++
+	int sumRightAnswers()const; //++
 	void print()const;
 };
 

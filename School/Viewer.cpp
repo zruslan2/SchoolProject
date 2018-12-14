@@ -439,7 +439,7 @@ void Viewer::menuT(int id)
 	}
 	else if (m == 1)
 	{
-
+		addTest(id);
 	}
 	else if (m == 2)
 	{
@@ -467,11 +467,152 @@ void Viewer::menuS(int id)
 	}
 	else if (m == 1)
 	{
-
+		clearScreen();
+		gotoXY(15, 5);
+		green();
+		cout << "Добро пожаловать в ITStep!";
+		gotoXY(15, 8); white();		
+		sch.readListTestsFromFile();
+		vector<string> lt;
+		for (auto i : sch.getListTests())
+		{
+			lt.push_back(i.getTestName());
+		}
+		int ti = choice(lt, 15, 8);
+		Test t;
+		t.readFromFile(ti);
+		clearScreen();
+		gotoXY(15, 5);
+		green();
+		cout << t.operator[](1).getQuesText()<<endl;
+		gotoXY(15, 8); white();		
+		const vector<string> ans = t.operator[](1).getAnswerChoice();
+		int i = choice(ans, 15, 8);
+		
+		//ans = t.operator[](1).getAnswer();
 	}
 	else if (m == 2)
 	{
 
 	}
 
+}
+
+void Viewer::addTest(int id) //++
+{
+	clearScreen();
+	gotoXY(15, 5); green();
+	cout << "Добавление нового теста!";
+	gotoXY(15, 8); white();
+	string nameTest;
+	cout << "Тема теста:";
+	gotoXY(32, 8);
+	cin.get();
+	getline(cin, nameTest);
+	Test t(nameTest);
+	cout << t.getIdTest();
+	Sleep(4000);
+	t.setIdCreator(id);
+	int cnt = 1;
+	while (true)
+	{
+		while (cnt < 3)
+		{
+			addQuesToTest(t);
+			cnt++;
+		}
+		clearScreen();
+		gotoXY(15, 8); white();
+		cout << "Добавить еще вопрос?";
+		vector<string> v = { "да", "нет" };
+		int s = choice(v, 15, 9);
+		if (s == 2)
+			break;
+		if (s == 1)
+		{
+			addQuesToTest(t);
+		}
+	}
+	int x = sch.getCntListTests();
+	t.setIdTest(++x);
+	t.setTestMaxResult(t.sumRightAnswers());
+	clearScreen();
+	gotoXY(15, 5); green();
+	cout << "Тест создан!";
+	gotoXY(15, 8); white();
+	cout << "Сохранить тест в файл?";
+	vector<string> v = { "да","нет" };
+	int s = choice(v, 15, 9);
+	if (s == 1)
+	{
+		//string name = "tests\\" + to_string(t.getIdTest());
+		t.writeToFile();
+	}
+	ListTests lt(t.getIdTest(), t.getTestName(), t.getIdCreator());
+	sch.addListTests(lt);
+}
+
+void Viewer::addQuesToTest(Test& t) //++
+{
+	clearScreen();
+	gotoXY(15, 5);
+	cout << "Добавление нового вопроса!";
+	gotoXY(15, 8); white();
+	string quesText;
+	cout << "Напишите вопрос:";
+	gotoXY(32, 8);
+	cin.get();
+	getline(cin, quesText);
+	Question q(quesText);	
+	int k = 1;
+	while (true)
+	{
+		while (k < 3)
+		{
+			addAnswers(q, k);
+			k++;
+		}
+		clearScreen();
+		gotoXY(15, 8); white();
+		cout << "Добавить еще вариант ответа?";
+		vector<string> v = { "да", "нет" };
+		int s = choice(v, 15, 9);
+		if (s == 2) {
+			if (q.getCntRightAnswers() != 0)
+				break;
+			else
+			{
+				clearScreen();
+				gotoXY(15, 8);
+				cout << "Вы не отметили ни одного правильного ответа. Введите заново";
+				k = 1;
+				Sleep(1000);
+				continue;
+			}
+		}
+		if (s == 1)
+		{
+			addAnswers(q, k);
+			k++;
+		}
+	}
+	t.addQuestion(q);
+}
+
+void Viewer::addAnswers(Question & q, int quesNum) //++
+{
+	string answer;
+	clearScreen();
+	gotoXY(15, 8); white();
+	cout << "Вариант ответа:";
+	gotoXY(32, 8);
+	cin.get();
+	getline(cin, answer);
+	gotoXY(15, 9);
+	cout << "Является ли этот вариант ответа правильным?";
+	vector<string> vs = { "да","нет" };
+	int ss = choice(vs, 15, 10);
+	if (ss == 1)
+		q.addRightAnswers(quesNum);
+	q.addAnswerChoice(answer);
 }

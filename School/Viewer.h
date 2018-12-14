@@ -24,5 +24,9 @@ public:
 	void menuA();
 	void menuT(int id);
 	void menuS(int id);
+
+	void addTest(int id); //++
+	void addQuesToTest(Test& t); //++
+	void addAnswers(Question& q, int quesNum); //++
 };
 

@@ -69,9 +69,10 @@ string Test::convertToString()
 	return res;
 }
 
-void Test::readFromFile(string fileName)
+void Test::readFromFile(int id)
 {
-	ifstream is(fileName);
+	string fn = "tests/" + to_string(id);
+	ifstream is(fn);
 	vector<string> v;
 	string tmp;
 	while (!is.eof()) {
@@ -90,12 +91,22 @@ void Test::readFromFile(string fileName)
 	is.close();
 }
 
-void Test::writeToFile(string fileName)
+void Test::writeToFile() //++
 {
-	ofstream os(fileName);
+	string name = "tests/" + to_string(idTest);
+	ofstream os(name);
 	string str = convertToString();
 	os << str;
 	os.close();
+}
+
+int Test::sumRightAnswers() const //++
+{
+	int sum = 0;
+	for (auto&i : testQuestions) {
+		sum += i.second.getCntRightAnswers();
+	}
+	return sum;
 }
 
 void Test::print() const

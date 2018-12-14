@@ -3,6 +3,7 @@
 #include "Teacher.h"
 #include "Tester.h"
 #include "ListTests.h"
+#include "Test.h"
 #include <fstream>
 class School
 {
@@ -27,6 +28,7 @@ public:
 	void addListTests(ListTests& lt); //++
 	const vector<Student>& getStudentsList()const { return students; }
 	const vector<Teacher>& getTeachersList()const { return teachers; }
+	const vector<ListTests>& getListTests()const { return listTests; }
 	const Student& getStudent(int idStudent)const;
 	const Student& getStudent(string surname)const;
 	const Teacher& getTeacher(int idTeacher) const;
@@ -45,4 +47,7 @@ public:
 	void readTeachersFromFile(); //++
 	void readTestersFromFile(); //++
 	void readListTestsFromFile(); //++
+
+	int getCntTesters()const { return testers.size(); } //++
+	int getCntListTests()const { return listTests.size(); } //++
 };
